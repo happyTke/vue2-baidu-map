@@ -50,17 +50,17 @@ export default {
       }
     },
     'position.lng'(val, oldVal) {
-      const { BMap } = this
+      const { BMap, position } = this
       const lng = val
       if (val.toString() !== oldVal.toString() && lng >= -180 && lng <= 180) {
-        this.originInstance.setCenter(createPoint(BMap, { lng, lat: this.center.lat }))
+        this.originInstance.setCenter(createPoint(BMap, { lng, lat: position.lat }))
       }
     },
     'position.lat'(val, oldVal) {
-      const { BMap } = this
+      const { BMap, position } = this
       const lat = val
       if (val.toString() !== oldVal.toString() && lat >= -74 && lat <= 74) {
-        this.originInstance.setCenter(createPoint(BMap, { lng: this.center.lng, lat }))
+        this.originInstance.setCenter(createPoint(BMap, { lng: position.lng, lat }))
       }
     },
     labelStyle: {
