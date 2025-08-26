@@ -41,7 +41,11 @@ export default {
       default() {
         return []
       }
-    }
+    },
+    zIndex: {
+      type: Number,
+      default: 0
+    },
   },
   watch: {
     path: {
@@ -76,7 +80,10 @@ export default {
     },
     clicking(val) {
       this.reload()
-    }
+    },
+    zIndex(val) {
+      this.originInstance.setZIndex(val || 0)
+    },
   },
   computed: {
     iconSequences() {
@@ -88,7 +95,7 @@ export default {
   },
   methods: {
     load() {
-      const { BMap, map, path, strokeColor, strokeWeight, strokeOpacity, strokeStyle, editing, massClear, clicking, iconSequences } = this
+      const { BMap, map, path, strokeColor, strokeWeight, strokeOpacity, strokeStyle, editing, massClear, clicking, iconSequences, zIndex } = this
       let options = {
         strokeColor,
         strokeWeight,
@@ -97,11 +104,13 @@ export default {
         enableEditing: editing,
         enableMassClear: massClear,
         enableClicking: clicking,
-        icons: iconSequences
+        icons: iconSequences,
+        zIndex,
       };
       deleteEmptyKey(options);
       const overlay = new BMap.Polyline(path.map(item => createPoint(BMap, { lng: item.lng, lat: item.lat })), options)
       this.originInstance = overlay
+      overlay.zIndex(zIndex || 0)
       map.addOverlay(overlay)
       bindEvents.call(this, overlay)
     }
