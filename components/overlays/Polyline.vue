@@ -110,8 +110,8 @@ export default {
       deleteEmptyKey(options);
       const overlay = new BMap.Polyline(path.map(item => createPoint(BMap, { lng: item.lng, lat: item.lat })), options)
       this.originInstance = overlay
-      overlay.zIndex(zIndex || 0)
       map.addOverlay(overlay)
+      overlay.setZIndex(zIndex || 0)
       bindEvents.call(this, overlay)
     }
   }
